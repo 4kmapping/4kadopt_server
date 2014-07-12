@@ -1,8 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class OZFeature(models.Model):
-    worldid = models.CharField(max_length=30)
+    worldid = models.CharField(max_length=30, unique=True)
     zonename = models.CharField(max_length=100)
     cntyid = models.CharField(max_length=5)
     cntyname = models.CharField(max_length=30)
@@ -14,7 +15,14 @@ class OZFeature(models.Model):
     polygons = models.TextField()
     
 
-
+class Adoption(models.Model):
+    worldid = models.CharField(max_length=30, unique=True)
+    targetyear = models.IntegerField()
+    user = models.ForeignKey(User)
+    update = models.DateTimeField(auto_now=True)
+    is_adopted = models.BooleanField()
+    
+     
 
 
     

@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from api.serializers import UserSerializer, GroupSerializer, OZFeatureSerializer
-from api.models import OZFeature
+from api.serializers import UserSerializer, GroupSerializer
+from api.serializers import OZFeatureSerializer, AdoptionSerializer
+from api.models import OZFeature, Adoption
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -26,4 +27,17 @@ class OZFeatureViewSet(viewsets.ModelViewSet):
     """
     queryset = OZFeature.objects.all()
     serializer_class = OZFeatureSerializer
+    
+    
+class AdoptionViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows Adoption to be viewed or edited.
+    """  
+    queryset = Adoption.objects.all()
+    serializer_class = AdoptionSerializer      
+    
+    
+    
+    
+    
     

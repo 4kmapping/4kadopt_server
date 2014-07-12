@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from models import OZFeature
+from models import OZFeature, Adoption
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -18,7 +18,12 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class OZFeatureSerializer(serializers.HyperlinkedModelSerializer): 
     class Meta:
         model = OZFeature
-        fields = ('worldid','zonename','cntyid','cntyname','globalid',
+        fields = ('url','worldid','zonename','cntyid','cntyname','globalid',
             'population','cen_x','cen_y','labelname','polygons')
         
-                
+class AdoptionSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Adoption
+        fields = ('url','worldid','targetyear','user','update','is_adopted')
+      
+              
