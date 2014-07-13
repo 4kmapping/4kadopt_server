@@ -1,8 +1,13 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.authentication import BasicAuthentication
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from api.serializers import UserSerializer, GroupSerializer
 from api.serializers import OZFeatureSerializer, AdoptionSerializer
 from api.models import OZFeature, Adoption
+from permissions import IsOwner
+
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -11,6 +16,20 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated,]
+     
+    def get_queryset(self):
+        '''
+        If a user is admin, whole list is shown. If a user is not admin,
+        the user's own info will be shown only. 
+        '''
+        if self.request.user.is_staff:
+            qset = User.objects.all()
+        else:
+            qset = [User.objects.get(username=self.request.user.username)]     
+        return qset
+
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -19,6 +38,8 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
     
     
 class OZFeatureViewSet(viewsets.ModelViewSet):
@@ -27,6 +48,8 @@ class OZFeatureViewSet(viewsets.ModelViewSet):
     """
     queryset = OZFeature.objects.all()
     serializer_class = OZFeatureSerializer
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = []    
     
     
 class AdoptionViewSet(viewsets.ModelViewSet):
@@ -34,7 +57,22 @@ class AdoptionViewSet(viewsets.ModelViewSet):
     API endpoint that allows Adoption to be viewed or edited.
     """  
     queryset = Adoption.objects.all()
-    serializer_class = AdoptionSerializer      
+    serializer_class = AdoptionSerializer  
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        '''
+        If a user is admin, whole list is shown. If a user is not admin,
+        the user's own info will be shown only. 
+        '''
+        if self.request.user.is_staff:
+            qset = Adoption.objects.all()
+        else:
+            qset = Adoption.objects.filter(user=self.request.user)     
+        return qset 
+    
+           
     
     
     

@@ -6,7 +6,8 @@ from models import OZFeature, Adoption
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'groups')
+        fields = ('url', 'username', 'first_name','last_name', 'is_staff', 
+            'email', 'groups')
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
