@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
+from rest_framework import viewsets, generics, mixins
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -8,6 +8,18 @@ from api.serializers import OZFeatureSerializer, AdoptionSerializer
 from api.models import OZFeature, Adoption
 from permissions import IsOwner
 
+
+
+class FullViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, 
+        mixins.RetrieveModelMixin, mixins.UpdateModelMixin, 
+        mixins.DestroyModelMixin, viewsets.GenericViewSet):
+    """
+    A viewset that provides `retrieve`, `create`, and `list` actions.
+
+    To use it, override the class and set the `.queryset` and
+    `.serializer_class` attributes.
+    """
+    pass
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -42,7 +54,7 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated, IsAdminUser]
     
     
-class OZFeatureViewSet(viewsets.ModelViewSet):
+class OZFeatureViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows OZFeatures to be viewed or edited.
     """
@@ -52,7 +64,7 @@ class OZFeatureViewSet(viewsets.ModelViewSet):
     permission_classes = []    
     
     
-class AdoptionViewSet(viewsets.ModelViewSet):
+class AdoptionViewSet(FullViewSet):
     """
     API endpoint that allows Adoption to be viewed or edited.
     """  
