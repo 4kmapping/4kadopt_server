@@ -4,6 +4,7 @@ from rest_framework import routers
 from api import views
 from facade import views as facade_views
 
+
 from django.contrib import admin
 admin.autodiscover()
 
@@ -23,6 +24,8 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/', include(router.urls)),
+    #url(r'^m/', include('mobile.urls')),
     #url(r'^$', facade_views.index),
     url(r'',TemplateView.as_view(template_name="facade/index.html")),
+
 )

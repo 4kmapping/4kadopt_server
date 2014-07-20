@@ -5,3 +5,6 @@ from django.shortcuts import render
 def index(request):
     #TODO: Currently Not Used. TemplateView is used instead.
     return render(request, 'facade/index.html', {})
+
+
+

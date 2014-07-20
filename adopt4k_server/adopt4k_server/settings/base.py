@@ -31,10 +31,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # REST framework
     'rest_framework',
+    'rest_framework.authtoken',
     'guardian',
     # adopt server apps
     'facade',
     'api',
+    #'mobile',
 )
 
 MIDDLEWARE_CLASSES = (

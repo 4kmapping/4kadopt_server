@@ -2,6 +2,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, generics, mixins
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.authentication import BasicAuthentication
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from api.serializers import UserSerializer, GroupSerializer
 from api.serializers import OZFeatureSerializer, AdoptionSerializer
@@ -51,6 +52,7 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated, IsAdminUser]
     
     
+    
 class OZFeatureViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows OZFeatures to be viewed or edited.
@@ -59,6 +61,7 @@ class OZFeatureViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = OZFeatureSerializer
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = []    
+    
     
     
 class AdoptionViewSet(FullViewSet):
@@ -75,6 +78,20 @@ class AdoptionViewSet(FullViewSet):
         If a user is admin, whole list is shown. If a user is not admin,
         the user's own info will be shown only. 
         '''
+        # If a user is checking the availability of an omega zaone having wid
+        wid = self.request.QUERY_PARAMS.get('wid', None)
+        opt = self.request.QUERY_PARAMS.get('adopted',None)
+        if wid:
+            return Adoption.objects.filter(worldid=wid)
+        
+        if opt and (opt == 'true' or opt == 'false') :
+            if opt == 'true':
+                adopted = True
+            else:
+                adopted = False
+            return Adoption.objects.filter(is_adopted=adopted)
+            
+        # User's privilege based Adoption list
         if self.request.user.is_staff:
             qset = Adoption.objects.all()
         else:
