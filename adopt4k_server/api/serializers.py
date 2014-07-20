@@ -25,6 +25,16 @@ class OZFeatureSerializer(serializers.HyperlinkedModelSerializer):
 class AdoptionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Adoption
+        #fields = ('url','worldid','targetyear','user','update','is_adopted')
+        fields = ('url','worldid','targetyear','update','is_adopted')
+
+class AdoptionWithUserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Adoption
         fields = ('url','worldid','targetyear','user','update','is_adopted')
-      
-              
+        
+             
+class AdoptionSimpleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Adoption
+        fields = ('worldid','targetyear','is_adopted', 'user')              

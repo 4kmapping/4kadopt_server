@@ -17,15 +17,9 @@ router.register(r'adoptions', views.AdoptionViewSet)
 
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'adopt4k_server.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/', include(router.urls)),
-    #url(r'^m/', include('mobile.urls')),
-    #url(r'^$', facade_views.index),
     url(r'',TemplateView.as_view(template_name="facade/index.html")),
 
 )
