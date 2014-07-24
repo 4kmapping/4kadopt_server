@@ -75,7 +75,7 @@ class AdoptionViewSet(FullViewSet):
     permission_classes = [IsAuthenticated, AllReadCreateOnlyOwnerUpdateDelete]
     
     def pre_save(self, obj):
-        obj.user = request.user
+        obj.user = self.request.user
     
     def get_queryset(self):
         '''

@@ -29,6 +29,7 @@ class AdoptionSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url','worldid','targetyear','update','is_adopted')
 
 class AdoptionWithUserSerializer(serializers.HyperlinkedModelSerializer):
+    # FOR ADMIN USER
     class Meta:
         model = Adoption
         fields = ('url','worldid','targetyear','user','update','is_adopted')
