@@ -6,7 +6,7 @@ class OZFeature(models.Model):
     worldid = models.CharField(max_length=30, unique=True)
     zonename = models.CharField(max_length=100)
     cntyid = models.CharField(max_length=5)
-    cntyname = models.CharField(max_length=30)
+    cntyname = models.CharField(max_length=100)
     globalid = models.CharField(max_length=50)
     population = models.IntegerField()
     cen_x = models.FloatField()
