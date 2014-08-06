@@ -19,23 +19,6 @@
 
     <div id="map"></div>
 
-    <!-- Some options to play with -->
-    <div id="options">
-
-        <h2>Zoom levels</h2>
-        <p>Note: Tweaking these options might crash your browser</p>
-
-        <label for="current_zoom">Current level</label>
-        <input id="current_zoom" type="text" disabled="disabled">
-
-        <label for="lq_start_layer">Any OZ's</label>
-        <input id="lq_start_layer" type="number">
-
-        <label for="hq_start_layer">HQ OZ's</label>
-        <input id="hq_start_layer" type="number">
-
-    </div>
-
     <!-- Because without jQuery, where would the world really be? -->
     <script src="{% static "scripts/jquery.js" %}"></script>
     <!-- Loads leaflet, mapping library -->
@@ -43,8 +26,6 @@
     <!-- Loads esri leaflet for leaflet + arcgis integration -->
     <script src="{% static "scripts/esri-leaflet.js" %}"></script>
 
-    <!-- Loads our options controller to control the option controls on the screen -->
-    <script src="{% static "scripts/optionsController.js" %}"></script>
     <!-- Loads our oz controller to control the omega zones -->
     <script src="{% static "scripts/ozController.js" %}"></script>
     <!-- Loads the js file that will start it all -->
