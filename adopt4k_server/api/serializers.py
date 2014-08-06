@@ -19,8 +19,8 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class OZFeatureSerializer(serializers.HyperlinkedModelSerializer): 
     class Meta:
         model = OZFeature
-        fields = ('url','worldid','zonename','cntyid','cntyname','globalid',
-            'population','cen_x','cen_y','labelname','polygons')
+        fields = ('url','worldid','zonename', 'world_type','cntyid','cntyname',
+            'globalid', 'population','cen_x','cen_y','labelname','polygons')
         
 class AdoptionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

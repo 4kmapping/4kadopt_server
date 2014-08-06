@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class OZFeature(models.Model):
     worldid = models.CharField(max_length=30, unique=True)
     zonename = models.CharField(max_length=100)
+    world_type = models.CharField(max_length=1)
     cntyid = models.CharField(max_length=5)
     cntyname = models.CharField(max_length=100)
     globalid = models.CharField(max_length=50)
