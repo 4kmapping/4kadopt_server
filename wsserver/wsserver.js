@@ -14,7 +14,7 @@ var mysql_connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'adoptdb'
+  database: 'adoptdb',
 });
 
 var sockets = {} ;
@@ -37,20 +37,32 @@ io.on('connect', function (socket) {
 
 mysql_connection.connect();
 
-var lastMysqlFetchTimestamp = Date.now();
+var getMysqlFriendlyTimestamp = function(){
+
+  var date = new Date();
+  return date.getUTCFullYear() + '-' +
+    ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
+    ('00' + date.getUTCDate()).slice(-2) + ' ' + 
+    ('00' + date.getUTCHours()).slice(-2) + ':' + 
+    ('00' + date.getUTCMinutes()).slice(-2) + ':' + 
+    ('00' + date.getUTCSeconds()).slice(-2);
+
+}
+
+var lastMysqlFetchTimestamp = getMysqlFriendlyTimestamp();
 
 // listen to the txt file
 watch('../isUpdated.txt', function(){
 
   console.log('last mysql check', lastMysqlFetchTimestamp) ;
 
-  mysql_connection.query('select * from api_adoption where UNIX_TIMESTAMP(`update`) > ' + lastMysqlFetchTimestamp, function(err, rows, fields) {
+  mysql_connection.query('select * from api_adoption where `update` > ?', lastMysqlFetchTimestamp, function(err, rows, fields) {
 
     console.log(err);
 
     if (err) throw err;
 
-    lastMysqlFetchTimestamp = Date.now();
+    lastMysqlFetchTimestamp = getMysqlFriendlyTimestamp();
 
     // var rows = [
     //   {
@@ -63,7 +75,7 @@ watch('../isUpdated.txt', function(){
     //   }
     // ];
 
-    console.log('new data', rows, fields);
+    console.log('new data', rows.length);
 
     for (var id in sockets) {
       console.log('sending to', id);
