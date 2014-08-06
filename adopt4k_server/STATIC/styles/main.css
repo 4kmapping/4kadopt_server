@@ -8,19 +8,111 @@ html, body, #map {
   font-size: 15px;
   line-height: 24px;
 
-  background-color: black;
+  background-color: #ABABAB;
 
+}
+
+.leaflet-control-attribution {
+  display: none;
+}
+
+#tooltip {
+  display: none;
+
+  position: absolute;
+
+  z-index: 100;
+    top: 0;
+    left: 0;
+
+  width: 45px;
+  height: 25px;
+
+  padding: 2.5px;
+
+  background-color: #f2f2f2;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px #545454;
+
+}
+
+.adopted-2013 {
+  fill: #99000d;
+}
+
+.adopted-2015 {
+  fill: #cb181d;
+}
+
+.adopted-2016 {
+  fill: #ef3b2c;
+}
+
+.adopted-2017 {
+  fill: #fb6a4a;
+}
+
+.adopted-2018 {
+  fill: #fc9272;
+}
+
+.adopted-2019 {
+  fill: #fcbba1;
+}
+
+.adopted-2020 {
+  fill: #fee0d2;
 }
 
 path {
-  stroke: white;
+  stroke: #616161;
   stroke-width: 1px;
+  fill: #084594;
   fill: rgba(1, 1, 1, 0);
+  fill-opacity: 0.9;
 }
 
-path.adopted-1 {
-  fill: #008eff;
+
+/*
+path {
+  stroke: #2B2B2B;
+  stroke-width: 1px;
+  fill: #f7fbff;
+  fill: rgba(1, 1, 1, 0);
+  fill-opacity: 0.9;
 }
+
+.adopted-2013 {
+  fill: #084594;
+}
+
+.adopted-2015 {
+  fill: #2171b5;
+}
+
+.adopted-2016 {
+  fill: #4292c6;
+}
+
+.adopted-2017 {
+  fill: #6baed6;
+}
+
+.adopted-2018 {
+  fill: #9ecae1;
+}
+
+.adopted-2019 {
+  fill: #c6dbef;
+}
+
+.adopted-2020 {
+  fill: #deebf7;
+}
+
+*/
+
 
 #options {
   position: absolute;
