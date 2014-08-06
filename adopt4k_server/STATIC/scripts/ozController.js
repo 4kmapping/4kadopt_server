@@ -12,7 +12,7 @@ var ozController = {
   oz_url: this.oz_url_lq,
 
   lq_oz_start_at_level: 1,
-  hq_oz_start_at_level: 1,
+  hq_oz_start_at_level: 100, //no hq!
 
   init: function(){
 
