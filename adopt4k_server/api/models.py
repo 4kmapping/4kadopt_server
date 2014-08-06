@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import os
 
 
 class OZFeature(models.Model):
@@ -23,16 +24,11 @@ class Adoption(models.Model):
     update = models.DateTimeField(auto_now=True)
     is_adopted = models.BooleanField()
     
-     
+    def save(self, *args, **kwargs):
+        super(Adoption, self).save(*args, **kwargs)
 
-
-    
-
-
-    
-    
-
-     
-    
-
-
+        # super hacky, but its fast
+        isUpdatedFilePath = os.path.dirname(os.path.realpath(__file__)) + "/../../isUpdated.txt"
+        isUpdatedFile = open(isUpdatedFilePath, 'w')
+        isUpdatedFile.write("1")
+        isUpdatedFile.close()

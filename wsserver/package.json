@@ -1,0 +1,8 @@
+{
+	"name": "wsserver",
+	"dependencies": {
+		"socket.io": "*",
+		"mysql": "*",
+		"node-watch": "*"
+	}
+}

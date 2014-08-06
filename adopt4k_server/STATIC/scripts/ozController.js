@@ -22,13 +22,14 @@ var ozController = {
     this.$tooltip = $('#tooltip');
 
     this.fetchAdoptions();
+    this.connectToServer();
 
     this.map = L.map('map', {
       minZoom: 2,
       // zoomControl: false,
       reuseTiles: true
-    // }).setView([52.3667, 4.9000], 7), // NL zoomed in
-    }).setView([39.9167, 32.8333], 5), // turkey focused
+    }).setView([52.3667, 4.9000], 7), // NL zoomed in
+    // }).setView([39.9167, 32.8333], 5), // turkey focused
     // }).setView([0, 0], 2), //entire world center
 
     /*
@@ -61,6 +62,28 @@ var ozController = {
     this.setAppropiateOzQuality() ;
 
     return this ;
+
+  },
+
+  connectToServer: function(){
+
+    var socket = io('http://localhost:4000');
+    socket.on('connect', function (data) {
+
+      console.log('connected');
+
+      socket.on('newAdoptions', function(newAdoptions){
+
+        console.log('new adoptions!', newAdoptions);
+
+        for (var i in newAdoptions) {
+          var adoption = newAdoptions[i];
+          $('.oz-' + adoption['worldid']).attr('class', 'oz-' + adoption['worldid'] + ' adopted-' + adoption['targetyear']);
+        };
+
+      });
+
+    });
 
   },
 

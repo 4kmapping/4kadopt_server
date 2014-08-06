@@ -19,7 +19,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -34,7 +33,7 @@ INSTALLED_APPS = (
     'guardian',
     # adopt server apps
     'facade',
-    'api',
+    'api'
 )
 
 MIDDLEWARE_CLASSES = (

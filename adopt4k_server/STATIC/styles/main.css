@@ -71,6 +71,9 @@ path {
   fill: #084594;
   fill: rgba(1, 1, 1, 0);
   fill-opacity: 0.9;
+
+  -webkit-transition: fill 0.5s ease-out;
+          transition: fill 0.5s ease-out;
 }
 
 
