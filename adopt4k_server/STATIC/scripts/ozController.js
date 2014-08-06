@@ -28,8 +28,8 @@ var ozController = {
       minZoom: 2,
       // zoomControl: false,
       reuseTiles: true
-    }).setView([52.3667, 4.9000], 7), // NL zoomed in
-    // }).setView([39.9167, 32.8333], 5), // turkey focused
+    // }).setView([52.3667, 4.9000], 7), // NL zoomed in
+    }).setView([39.9167, 32.8333], 5), // turkey focused
     // }).setView([0, 0], 2), //entire world center
 
     /*

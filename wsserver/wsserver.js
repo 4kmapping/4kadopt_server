@@ -64,17 +64,6 @@ watch('../isUpdated.txt', function(){
 
     lastMysqlFetchTimestamp = getMysqlFriendlyTimestamp();
 
-    // var rows = [
-    //   {
-    //     id: 18,
-    //     worldid: 'NLD-ZUI',
-    //     targetyear: 2015,
-    //     user_id: 1,
-    //     update: 'Wed Aug 06 2014 18:23:50 GMT+0200 (CEST)',
-    //     is_adopted: 1
-    //   }
-    // ];
-
     console.log('new data', rows.length);
 
     for (var id in sockets) {
