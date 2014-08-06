@@ -1,13 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>4K Adopt</title>
-    
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-</head>
-<body style="text-align:center;">
-    <div style='font-family:"Open Sans", sans-serif;margin-top:100px;color:#2E9AFE'>
-    <h1>Welcome to 4K Adopt!</h1>
-</body>
 
+    <!-- ADOPT OMEGA ZONES NOAW! -->
+    <title>4K Adopt</title>
+
+    <!-- the meta tag that makes stuff responsive! :D -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Load Leaflet CSS from their CDN -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
+
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <div id="options">
+
+        <h2>Zoom levels</h2>
+        <p>Note: Tweaking these options might crash your browser</p>
+
+        <label for="current_zoom">Current level</label>
+        <input id="current_zoom" type="text" disabled="disabled">
+
+        <label for="lq_start_layer">Any OZ's</label>
+        <input id="lq_start_layer" type="number">
+
+        <label for="hq_start_layer">HQ OZ's</label>
+        <input id="hq_start_layer" type="number">
+
+    </div>
+
+    {% load static %}
+    <script src="{% static "adopt4k_server/scripts/jquery.js" %}"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="scripts/esri-leaflet.js"></script>
+    <script src="scripts/snap.svg.js"></script>
+
+
+</body>
 </html>

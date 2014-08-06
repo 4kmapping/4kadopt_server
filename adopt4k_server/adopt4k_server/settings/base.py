@@ -86,7 +86,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 # REST Framework
 
 REST_FRAMEWORK = {
