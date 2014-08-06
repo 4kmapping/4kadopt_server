@@ -7,7 +7,7 @@ var ozController = {
   base_layer: null,
   oz_layer: null,
 
-  api_url: '/api/adoptions/?format=json&PAGINATE_BY=5000',
+  api_url: '/api/adoptions/?format=json&page_size=5000',
   adoptions: {},
 
   oz_url_lq: 'https://services1.arcgis.com/DnZ5orhsUGGdUZ3h/arcgis/rest/services/OZLowRes2/FeatureServer/0',

@@ -100,6 +100,9 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAdminUser',
     ],
     'PAGINATE_BY': 30,
+
+    'PAGINATE_BY_PARAM': 'page_size',  # Allow client to override, using `?page_size=xxx`.
+    'MAX_PAGINATE_BY': 5000            # Maximum limit allowed when using `?page_size=xxx`.
 }
 
 
