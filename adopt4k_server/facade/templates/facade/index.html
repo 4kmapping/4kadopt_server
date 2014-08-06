@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,8 @@
 
     <!-- Load Leaflet CSS from their CDN -->
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <!-- Loads our styles -->
+    <link rel="stylesheet" href="{% static "styles/main.css" %}" />
 
 </head>
 <body>
@@ -33,21 +36,19 @@
 
     </div>
 
-    {% load static %}
-
     <!-- Because without jQuery, where would the world really be? -->
-    <script src="{% static "adopt4k_server/scripts/jquery.js" %}"></script>
+    <script src="{% static "scripts/jquery.js" %}"></script>
     <!-- Loads leaflet, mapping library -->
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
     <!-- Loads esri leaflet for leaflet + arcgis integration -->
-    <script src="{% static "adopt4k_server/scripts/esri-leaflet.js" %}"></script>
+    <script src="{% static "scripts/esri-leaflet.js" %}"></script>
 
     <!-- Loads our options controller to control the option controls on the screen -->
-    <script src="{% static "adopt4k_server/scripts/optionsController.js" %}"></script>
+    <script src="{% static "scripts/optionsController.js" %}"></script>
     <!-- Loads our oz controller to control the omega zones -->
-    <script src="{% static "adopt4k_server/scripts/ozController.js" %}"></script>
+    <script src="{% static "scripts/ozController.js" %}"></script>
     <!-- Loads the js file that will start it all -->
-    <script src="{% static "adopt4k_server/scripts/main.js" %}"></script>
+    <script src="{% static "scripts/main.js" %}"></script>
 
 </body>
 </html>
