@@ -11,12 +11,12 @@
     <!-- Load Leaflet CSS from their CDN -->
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 
-
 </head>
 <body>
 
     <div id="map"></div>
 
+    <!-- Some options to play with -->
     <div id="options">
 
         <h2>Zoom levels</h2>
@@ -34,11 +34,20 @@
     </div>
 
     {% load static %}
-    <script src="{% static "adopt4k_server/scripts/jquery.js" %}"></script>
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-    <script src="scripts/esri-leaflet.js"></script>
-    <script src="scripts/snap.svg.js"></script>
 
+    <!-- Because without jQuery, where would the world really be? -->
+    <script src="{% static "adopt4k_server/scripts/jquery.js" %}"></script>
+    <!-- Loads leaflet, mapping library -->
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <!-- Loads esri leaflet for leaflet + arcgis integration -->
+    <script src="{% static "adopt4k_server/scripts/esri-leaflet.js" %}"></script>
+
+    <!-- Loads our options controller to control the option controls on the screen -->
+    <script src="{% static "adopt4k_server/scripts/optionsController.js" %}"></script>
+    <!-- Loads our oz controller to control the omega zones -->
+    <script src="{% static "adopt4k_server/scripts/ozController.js" %}"></script>
+    <!-- Loads the js file that will start it all -->
+    <script src="{% static "adopt4k_server/scripts/main.js" %}"></script>
 
 </body>
 </html>
