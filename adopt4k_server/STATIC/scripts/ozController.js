@@ -20,11 +20,12 @@ var ozController = {
 
     this.map = L.map('map', {
       minZoom: 2
-    }).setView([52.3667, 4.9000], 7),
+    // }).setView([52.3667, 4.9000], 7), // amsterdam
+    }).setView([39.9167, 32.8333], 5), // turkey
     // }).setView([0, 0], 2), //center
 
     // load basemap
-    // this.base_layer = L.esri.basemapLayer('DarkGray').addTo(this.map) ;
+    this.base_layer = L.esri.basemapLayer('DarkGray').addTo(this.map) ;
 
     this.map.on('zoomend', $.proxy(this.zoomend, this)) ;
 
