@@ -23,6 +23,9 @@ class Adoption(models.Model):
     update = models.DateTimeField(auto_now=True)
     is_adopted = models.BooleanField()
     
+    class Meta:
+        unique_together = ('worldid','user')
+    
      
 
 

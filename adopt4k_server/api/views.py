@@ -11,6 +11,9 @@ from api.models import OZFeature, Adoption
 from permissions import IsOwner, AllReadCreateOnlyOwnerUpdateDelete
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
+from django.http import HttpResponse, HttpResponseNotAllowed
+from django.http import HttpResponseBadRequest
+
 
 class FullViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, 
         mixins.RetrieveModelMixin, mixins.UpdateModelMixin, 
@@ -106,81 +109,30 @@ class AdoptionViewSet(FullViewSet):
         return qset 
     
 
-"""
-class AdoptionStatusViewSet(viewsets.GenericViewSet):
-    '''
-    View to list all users in the system.
-
-    * Requires token authentication.
-    * Only admin users are able to access this view.
-    '''
-    queryset = Adoption.objects.all()
-    lookup_field = 'worldid'
-    serializer_class = AdoptionSerializer 
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
-    #permission_classes = [AllReadCreateOnlyOwnerUpdateDelete]
-    permission_classes = []
-    
-    def create(self, request):
-        wid = request.POST.get('worldid', None)
-        if wid is None:
-            return response({'status':'Failed to create.'})
-        ozs = Adoption.objects.filter(worldid=wid)
-        if len(ozs) > 0 :
-            status = {'status':'Failed to create. The worldid already exists,'}
-            return response(status)
-        adoption = Adoption()
-        adoption.worldid = wid
-        adoption.is_adopted = request.POST.get('is_adopted', False)
-        adoption.user = request.user
-        adoption.targetyear = request.POST.get('is_adopted', 0)
-        adoption.save()
-        return response({'status':'Successfully created.'})
-
-    def retrieve(self, request, worldid=None):
-        queryset = Adoption.objects.all()
-        adoption = get_object_or_404(queryset, worldid=worldid)
-        serializer = AdoptionSimpleSerializer(adoption)
-        return Response(serializer.data)
-
-    def update(self, request, worldid=None):
-        if worldid is None:
-            return response({'status':'Failed to update.'})
-        ozs = Adoption.objects.filter(worldid=worldid)
-        if len(ozs) == 1 and (request.user.id == ozs[0].user_id):
-            oz = ozs[0]
-            oz.worldid = worldid
-            oz.is_adopted = request.POST.get('is_adopted',False)
-            oz.targetyear = request.POST.get('targetyear', 0)
-            oz.save()
-            return response({'status':'Successfully updated.'}) 
-        return response({'status':'Failed to update.'})
+def ozstatus(request):
+    if request.method == 'GET':
+        status = 'none'
+        if request.GET.get('wid', None):
+            wid = request.GET['wid']
             
-    def partial_update(self, request, worldid=None):
-        if worldid is None:
-            return response({'status':'Failed to partial-update.'})
-        ozs = Adoption.objects.filter(worldid=worldid)
-        if len(ozs) == 1 and (request.user.id == ozs[0].user_id):
-            oz = ozs[0]
-            oz.worldid = worldid
-            oz.is_adopted = request.POST.get('is_adopted',oz.is_adopted)
-            oz.targetyear = request.POST.get('targetyear',oz.targeryear)
-            oz.save()
-            return response({'status':'Successfully updated.'})  
-        return response({'status':'Failed to partial-update.'}) 
+            print 'wid:', wid 
+            
+            if request.GET.get('uid',None):
+                uid = request.GET['uid']
+                
+                print 'uid:', uid
+                
+                ozs = Adoption.objects.filter(worldid=wid,user=uid)
+                if len(ozs) > 0: # The current user already adopted oz.
+                    status = 'owned'
+                    return HttpResponse(status)
+            
+            ozs = Adoption.objects.filter(worldid=wid)    
+            if len(ozs) > 0:
+                status = 'taken'
+        return HttpResponse(status)
+    else:
+        mssg = 'The HTTP method is not supported'
+        return HttpResponseBadRequest(mssg)
 
-    def destroy(self, request, worldid=None):
-        if worldid is None:
-            return response({'status':'Failed to delete.'})
-        ozs = Adoption.objects.filter(worldid=worldid)
-        if len(ozs) == 1 and (request.user.id == ozs[0].user_id):
-            ozs[0].delete()
-            return response({'status':'Successfully deleted.'})  
-        return response({'status':'Failed to delete.'}) 
-"""            
-    
-    
-    
-    
-    
     
