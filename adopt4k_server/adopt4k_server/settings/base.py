@@ -19,7 +19,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -34,7 +33,7 @@ INSTALLED_APPS = (
     'guardian',
     # adopt server apps
     'facade',
-    'api',
+    'api'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -72,7 +71,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -101,6 +100,9 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAdminUser',
     ],
     'PAGINATE_BY': 30,
+
+    'PAGINATE_BY_PARAM': 'page_size',  # Allow client to override, using `?page_size=xxx`.
+    'MAX_PAGINATE_BY': 5000            # Maximum limit allowed when using `?page_size=xxx`.
 }
 
 

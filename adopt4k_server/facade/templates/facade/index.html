@@ -17,6 +17,7 @@
 </head>
 <body>
 
+    <div id="tooltip"></div>
     <div id="map"></div>
 
     <!-- Because without jQuery, where would the world really be? -->
@@ -25,6 +26,8 @@
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
     <!-- Loads esri leaflet for leaflet + arcgis integration -->
     <script src="{% static "scripts/esri-leaflet.js" %}"></script>
+    <!-- websockets -->
+    <script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
 
     <!-- Loads our oz controller to control the omega zones -->
     <script src="{% static "scripts/ozController.js" %}"></script>

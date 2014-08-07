@@ -1,10 +1,13 @@
 var ozController = {
 
+  $tooltip: null,
+
   map: null,
+
   base_layer: null,
   oz_layer: null,
 
-  api_url: '/api/adoptions/?format=json',
+  api_url: '/api/adoptions/?format=json&page_size=5000',
   adoptions: {},
 
   oz_url_lq: 'https://services1.arcgis.com/DnZ5orhsUGGdUZ3h/arcgis/rest/services/OZLowRes2/FeatureServer/0',
@@ -16,24 +19,71 @@ var ozController = {
 
   init: function(){
 
+    this.$tooltip = $('#tooltip');
+
     this.fetchAdoptions();
+    this.connectToServer();
 
     this.map = L.map('map', {
-      minZoom: 2
-    // }).setView([52.3667, 4.9000], 7), // amsterdam
-    }).setView([39.9167, 32.8333], 5), // turkey
-    // }).setView([0, 0], 2), //center
+      minZoom: 2,
+      // zoomControl: false,
+      reuseTiles: true
+    // }).setView([52.3667, 4.9000], 7), // NL zoomed in
+    }).setView([39.9167, 32.8333], 5), // turkey focused
+    // }).setView([0, 0], 2), //entire world center
 
+    /*
+      Available basemaps;
+      -------------------
+      - Streets
+      - Topographic
+      - NationalGeographic - ugly
+      - Oceans - busy?
+      -> Gray - too light?
+      -> DarkGray - too dark?
+      - Imagery - busy
+      - ShadedRelief - ugly
+    */
     // load basemap
-    this.base_layer = L.esri.basemapLayer('DarkGray').addTo(this.map) ;
+    // this.base_layer = L.esri.basemapLayer('Topographic').addTo(this.map) ;
+
+    // L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-base/{z}/{x}/{y}.png', {
+    //   attribution: 'Tiles &copy; Esri &mdash; Source: USGS, Esri, TANA, DeLorme, and NPS',
+    //   maxZoom: 13
+    // }).addTo(this.map);
+
+    L.tileLayer('http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.jpg90?access_token=pk.eyJ1Ijoiam9zaHVhZGVsYW5nZSIsImEiOiJ3RU1SemNzIn0.CyG3f36Z16ov1JEDHw2gDQ', {
+      mapid: 'joshuadelange.j5igjfc7',
+    }).addTo(this.map);
 
     this.map.on('zoomend', $.proxy(this.zoomend, this)) ;
-
 
     // this.addOzLayer() ;
     this.setAppropiateOzQuality() ;
 
     return this ;
+
+  },
+
+  connectToServer: function(){
+
+    var socket = io('http://localhost:4000');
+    socket.on('connect', function (data) {
+
+      console.log('connected');
+
+      socket.on('newAdoptions', function(newAdoptions){
+
+        console.log('new adoptions!', newAdoptions);
+
+        for (var i in newAdoptions) {
+          var adoption = newAdoptions[i];
+          $('.oz-' + adoption['worldid']).attr('class', 'oz-' + adoption['worldid'] + ' adopted adopted-' + adoption['targetyear']);
+        };
+
+      });
+
+    });
 
   },
 
@@ -75,6 +125,41 @@ var ozController = {
       // reduce for prettier maps, increase for faster ugly
       simplifyFactor: 1,
 
+      // adds hover thing
+      onEachFeature: $.proxy(function(feature, layer){
+
+        if(this.adoptions.hasOwnProperty(feature.properties.WorldID)){
+
+          layer.on({
+
+            'mousemove': $.proxy(function(e) {
+
+              this.$tooltip.css({
+                left: e.originalEvent.pageX - 25,
+                top: e.originalEvent.pageY- 35
+              });
+
+            }, this),
+
+            'mouseover': $.proxy(function(e) {
+
+              this.$tooltip.html(this.adoptions[feature.properties.WorldID]);
+              this.$tooltip.show();
+
+            }, this),
+
+            'mouseout': $.proxy(function(e) {
+
+              this.$tooltip.hide();
+
+            }, this)
+
+          });
+
+        }
+
+      }, this),
+
       // initially style adopted oz's + give world id class name for later lookup
       style: $.proxy(function(feature){
 
@@ -86,7 +171,7 @@ var ozController = {
 
         // if oz is adopted already, give class
         if(this.adoptions.hasOwnProperty(feature.properties.WorldID)){
-          style['className'] = style['className'] + ' adopted-1'
+          style['className'] = style['className'] + ' adopted-' + this.adoptions[feature.properties.WorldID]
         }
 
         return style ;

@@ -58,3 +58,6 @@ include/
 # production settings
 production.py
 
+# node stuff
+wsserver/node_modules/
+
