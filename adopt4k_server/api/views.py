@@ -115,13 +115,8 @@ def ozstatus(request):
         if request.GET.get('wid', None):
             wid = request.GET['wid']
             
-            print 'wid:', wid 
-            
             if request.GET.get('uid',None):
-                uid = request.GET['uid']
-                
-                print 'uid:', uid
-                
+                uid = request.GET['uid']                
                 ozs = Adoption.objects.filter(worldid=wid,user=uid)
                 if len(ozs) > 0: # The current user already adopted oz.
                     status = 'owned'
