@@ -23,7 +23,7 @@ class Adoption(models.Model):
     update = models.DateTimeField(auto_now=True)
     is_adopted = models.BooleanField()
     # Additional info to display
-    oz_label_name = models.CharField(max_length=50)
+    oz_zone_name = models.CharField(max_length=50)
     oz_country_name = models.CharField(max_length=50)
     user_display_name = models.CharField(max_length=50) 
     
