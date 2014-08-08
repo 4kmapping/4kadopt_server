@@ -27,7 +27,7 @@ class AdoptionSerializer(serializers.HyperlinkedModelSerializer):
         model = Adoption
         #fields = ('url','worldid','targetyear','user','update','is_adopted')
         fields = ('url','worldid','targetyear','update','is_adopted', 
-            'oz_label_name', 'oz_country_name', 'user_display_name' )        
+            'oz_zone_name', 'oz_country_name', 'user_display_name' )        
 
 class AdoptionWithUserSerializer(serializers.HyperlinkedModelSerializer):
     # FOR ADMIN USER
