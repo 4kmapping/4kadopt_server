@@ -111,7 +111,7 @@ class AdoptionViewSet(FullViewSet):
 
 def ozstatus(request):
     if request.method == 'GET':
-        status = 'none'
+        status = 'wrongId'
         if request.GET.get('wid', None):
             wid = request.GET['wid']
             
@@ -131,6 +131,8 @@ def ozstatus(request):
             ozs = Adoption.objects.filter(worldid=wid)    
             if len(ozs) > 0:
                 status = 'taken'
+            else:
+                status = 'none'
         return HttpResponse(status)
     else:
         mssg = 'The HTTP method is not supported'
