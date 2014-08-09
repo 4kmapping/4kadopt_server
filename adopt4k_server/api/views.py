@@ -117,7 +117,7 @@ def ozstatus(request):
             
             # Check if wid is valid
             ozs_check = OZFeature.objects.filter(worldid=wid)
-            if len(ozs_check) > 0:
+            if len(ozs_check) == 0:
                 status = 'wrongId'
                 return HttpResponse(status)   
             
