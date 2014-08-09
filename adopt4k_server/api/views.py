@@ -115,6 +115,12 @@ def ozstatus(request):
         if request.GET.get('wid', None):
             wid = request.GET['wid']
             
+            # Check if wid is valid
+            ozs_check = OZFeature.objects.filter(worldid=wid)
+            if len(ozs_check) > 0:
+                status = 'wrongId'
+                return HttpResponse(status)   
+            
             if request.GET.get('uid',None):
                 uid = request.GET['uid']                
                 ozs = Adoption.objects.filter(worldid=wid,user=uid)
