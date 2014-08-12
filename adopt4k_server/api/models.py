@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+import os
 
 class OZFeature(models.Model):
     worldid = models.CharField(max_length=30, unique=True)
@@ -27,19 +27,15 @@ class Adoption(models.Model):
     oz_country_name = models.CharField(max_length=50)
     user_display_name = models.CharField(max_length=50) 
     
+
+    def save(self, *args, **kwargs):
+        super(Adoption, self).save(*args, **kwargs)
+
+        # super hacky, but its fast
+        isUpdatedFilePath = os.path.dirname(os.path.realpath(__file__)) + "/../../isUpdated.txt"
+        isUpdatedFile = open(isUpdatedFilePath, 'w')
+        isUpdatedFile.write("1")
+        isUpdatedFile.close()
+
     class Meta:
         unique_together = ('worldid','user')
-    
-     
-
-
-    
-
-
-    
-    
-
-     
-    
-
-
