@@ -113,3 +113,7 @@ AUTHENTICATION_BACKENDS = (
 
 
 ANONYMOUS_USER_ID = -1
+
+
+UPDATE_FILE_LOC = os.path.join(os.path.dirname(BASE_DIR),"isUpdate.txt")
+

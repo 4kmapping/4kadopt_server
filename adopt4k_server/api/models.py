@@ -32,9 +32,10 @@ class Adoption(models.Model):
         super(Adoption, self).save(*args, **kwargs)
 
         # super hacky, but its fast
-        isUpdatedFilePath = os.path.dirname(os.path.realpath(__file__)) + "/../../isUpdated.txt"
+        #isUpdatedFilePath = os.path.dirname(os.path.realpath(__file__)) + "/../../isUpdated.txt"
+        isUpdatedFile = UPDATE_FILE_LOC
         isUpdatedFile = open(isUpdatedFilePath, 'w')
-        isUpdatedFile.write("1")
+        isUpdatedFile.write("11")
         isUpdatedFile.close()
 
     class Meta:
