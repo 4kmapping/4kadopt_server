@@ -12,9 +12,9 @@ def index(request):
     return render(request, 'facade/index.html', {})
     
     
-    
+'''    
 @receiver(post_save, sender=Adoption)
 def print_signal(sender, **kawrgs):
     print("Adoption was saved.")
-    
+'''    
     
