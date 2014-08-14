@@ -10,7 +10,7 @@ var ozController = {
   api_url: '/api/adoptions/?format=json&page_size=5000',
   adoptions: {},
 
-  oz_url_lq: 'https://services1.arcgis.com/DnZ5orhsUGGdUZ3h/arcgis/rest/services/OZLowRes2/FeatureServer/0',
+  oz_url_lq: 'https://services1.arcgis.com/DnZ5orhsUGGdUZ3h/ArcGIS/rest/services/OZ2013_LowRes/FeatureServer/0',
   oz_url_hq: 'https://services1.arcgis.com/DnZ5orhsUGGdUZ3h/ArcGIS/rest/services/OZ2014/FeatureServer/0',
   oz_url: this.oz_url_lq,
 
