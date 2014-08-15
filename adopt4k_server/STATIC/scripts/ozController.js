@@ -17,12 +17,17 @@ var ozController = {
   lq_oz_start_at_level: 1,
   hq_oz_start_at_level: 100, //no hq!
 
+  totalAmountOfOmegaZones: 3955,
+
   init: function(){
 
     this.$tooltip = $('#tooltip');
 
     this.fetchAdoptions();
     this.connectToServer();
+
+    //to get a more accurate number in there
+    this.updateCountdown();
 
     var urlOptionsRaw = window.location.hash.replace('#', '').split('&'),
         urlOptions = {},
@@ -92,13 +97,9 @@ var ozController = {
   connectToServer: function(){
 
     var socket = io('http://' + window.location.hostname + ':4000');
-    socket.on('connect', function (data) {
+    socket.on('connect', $.proxy(function (data) {
 
-      console.log('connected');
-
-      socket.on('newAdoptions', function(newAdoptions){
-
-        console.log('new adoptions!', newAdoptions);
+      socket.on('newAdoptions', $.proxy(function(newAdoptions){
 
         for (var i in newAdoptions) {
 
@@ -114,21 +115,36 @@ var ozController = {
           //if there is an ozclass present
           if(ozClass){
             //update the currenttargetyear with the latest, regex'ed fromt the class
-            currentTargetYear = parseInt($oz.attr('class').match(/adopted-(\d+)/)[1]);
+            var possibleTargetYear = $oz.attr('class').match(/adopted-(\d+)/);
+            if(possibleTargetYear){
+              currentTargetYear = parseInt(possibleTargetYear[1]);
+            }
           }
 
           // if the new targetyear is earlier than the currenttarget year
           if(adoption['targetyear'] < currentTargetYear) {
+
+            //add to adoptions array
+            this.adoptions[adoption['worldid']] = adoption['targetyear'];
+
+            //a good moment to update the countdown
+            this.updateCountdown();
+
             //apply change to path
             $oz.attr('class', 'oz-' + adoption['worldid'] + ' adopted adopted-' + adoption['targetyear']);
+
           }
 
         };
 
-      });
+      }, this));
 
-    });
+    }, this));
 
+  },
+
+  updateCountdown: function(){
+    $('.countdown').html(this.totalAmountOfOmegaZones - Object.keys(this.adoptions).length);
   },
 
   fetchAdoptions: function(){
@@ -151,6 +167,8 @@ var ozController = {
         this.adoptions[adoption['worldid']] = adoption['targetyear'];
 
       };
+
+      this.updateCountdown();
 
     }, this));
 
