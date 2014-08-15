@@ -51,7 +51,7 @@ h2 {
   letter-spacing: 4px;
 }
 
-ul {
+#sidebar ul {
   margin: 0;
   margin-top: 50px;
 
@@ -69,7 +69,7 @@ ul {
     bottom: 0;
 }
 
-li {
+#sidebar li {
   color: #828282;
 
   padding-top: 10px;
@@ -78,13 +78,75 @@ li {
   border-top: 1px solid #666;
 }
 
-li .adoption-user {
+#sidebar li .adoption-user {
 }
 
-li .adoption-oz {
+#sidebar li .adoption-oz {
   display: block;
   color: #C9C9C9;
 }
+
+.legend {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: white;
+  height: 150px;
+  width: 80px;
+  color: black;
+}
+
+.legend ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 5px;
+}
+
+.legend li {
+  height: 20px;
+}
+
+.legend li div {
+  display: inline-block;
+  width: 30px;
+  height: 20px;
+  margin-right: 1px;
+}
+
+.legend li span {
+  position: relative;
+  top: -5px;
+  color: #454545;
+}
+
+.legend li div.adopted-2013 {
+  background-color: #99000d;
+}
+
+.legend li div.adopted-2015 {
+  background-color: #cb181d;
+}
+
+.legend li div.adopted-2016 {
+  background-color: #ef3b2c;
+}
+
+.legend li div.adopted-2017 {
+  background-color: #fb6a4a;
+}
+
+.legend li div.adopted-2018 {
+  background-color: #fc9272;
+}
+
+.legend li div.adopted-2019 {
+  background-color: #fcbba1;
+}
+
+.legend li div.adopted-2020 {
+  background-color: #fee0d2;
+}
+
 
 .leaflet-control-attribution {
   display: none;
