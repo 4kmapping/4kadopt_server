@@ -37,7 +37,7 @@ var ozController = {
           lon: 32.8333,
           zoom: 5
 
-          // NL focusses
+          // NL focussed
           // lat: 52.3667,
           // lon: 4.9000,
           // zoom: 7
