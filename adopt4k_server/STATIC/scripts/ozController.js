@@ -170,39 +170,39 @@ var ozController = {
       simplifyFactor: 1,
 
       // adds hover thing
-      onEachFeature: $.proxy(function(feature, layer){
+      // onEachFeature: $.proxy(function(feature, layer){
 
-        if(this.adoptions.hasOwnProperty(feature.properties.WorldID)){
+      //   if(this.adoptions.hasOwnProperty(feature.properties.WorldID)){
 
-          layer.on({
+      //     layer.on({
 
-            'mousemove': $.proxy(function(e) {
+      //       'mousemove': $.proxy(function(e) {
 
-              this.$tooltip.css({
-                left: e.originalEvent.pageX - 25,
-                top: e.originalEvent.pageY- 35
-              });
+      //         this.$tooltip.css({
+      //           left: e.originalEvent.pageX - 25,
+      //           top: e.originalEvent.pageY- 35
+      //         });
 
-            }, this),
+      //       }, this),
 
-            'mouseover': $.proxy(function(e) {
+      //       'mouseover': $.proxy(function(e) {
 
-              this.$tooltip.html(this.adoptions[feature.properties.WorldID]);
-              this.$tooltip.show();
+      //         this.$tooltip.html(this.adoptions[feature.properties.WorldID]);
+      //         this.$tooltip.show();
 
-            }, this),
+      //       }, this),
 
-            'mouseout': $.proxy(function(e) {
+      //       'mouseout': $.proxy(function(e) {
 
-              this.$tooltip.hide();
+      //         this.$tooltip.hide();
 
-            }, this)
+      //       }, this)
 
-          });
+      //     });
 
-        }
+      //   }
 
-      }, this),
+      // }, this),
 
       // initially style adopted oz's + give world id class name for later lookup
       style: $.proxy(function(feature){
