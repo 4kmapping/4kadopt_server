@@ -2,14 +2,89 @@ html, body, #map {
 
   width: 100%;
   height: 100%;
+
   margin: 0;
 
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
   font-size: 15px;
   line-height: 24px;
 
-  background-color: #ABABAB;
+  background-color: #363636;
 
+}
+
+#map {
+  width: 80%;
+  float: left;
+}
+
+#sidebar {
+  width: 17%;
+  padding: 1.5%;
+  float: right;
+  color: #BDBDBD;
+
+  position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+h1, h2 {
+  font-weight: 100;
+  text-align: center;
+  font-family: 'Helvetica Neue';
+}
+
+h1 {
+  font-size: 110px;
+
+  margin-top: 25px;
+  margin-bottom: 45px;
+
+  color: #CFCFCF;
+}
+
+h2 {
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+ul {
+  margin: 0;
+  margin-top: 50px;
+
+  padding: 0;
+  padding-bottom: 10px;
+
+  list-style-type: none;
+
+  max-height: 75%;
+  overflow: hidden;
+
+  position: absolute;
+    left: 25px;
+    right: 25px;
+    bottom: 0;
+}
+
+li {
+  color: #828282;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  border-top: 1px solid #666;
+}
+
+li .adoption-user {
+  text-transform: uppercase;
+}
+
+li .adoption-oz {
+  display: block;
+  color: #C9C9C9;
 }
 
 .leaflet-control-attribution {
