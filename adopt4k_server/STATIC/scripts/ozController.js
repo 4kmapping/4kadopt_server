@@ -67,7 +67,7 @@ var ozController = {
 
   connectToServer: function(){
 
-    var socket = io('http://' + window.location.hostname + '.org:4000');
+    var socket = io('http://' + window.location.hostname + ':4000');
     socket.on('connect', function (data) {
 
       console.log('connected');
