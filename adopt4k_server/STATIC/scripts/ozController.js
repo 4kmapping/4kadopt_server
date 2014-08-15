@@ -77,8 +77,28 @@ var ozController = {
         console.log('new adoptions!', newAdoptions);
 
         for (var i in newAdoptions) {
-          var adoption = newAdoptions[i];
-          $('.oz-' + adoption['worldid']).attr('class', 'oz-' + adoption['worldid'] + ' adopted adopted-' + adoption['targetyear']);
+
+              //shortcut to adoption
+          var adoption = newAdoptions[i],
+              //get oz path
+              $oz = $('.oz-' + adoption['worldid']),
+              //get oz class, if any
+              ozClass = $oz.attr('class'),
+              //set default target year
+              currentTargetYear = 3000 ; //the year 3000. when the world will be saved.
+
+          //if there is an ozclass present
+          if(ozClass){
+            //update the currenttargetyear with the latest, regex'ed fromt the class
+            currentTargetYear = parseInt($oz.attr('class').match(/adopted-(\d+)/)[1]);
+          }
+
+          // if the new targetyear is earlier than the currenttarget year
+          if(adoption['targetyear'] < currentTargetYear) {
+            //apply change to path
+            $oz.attr('class', 'oz-' + adoption['worldid'] + ' adopted adopted-' + adoption['targetyear']);
+          }
+
         };
 
       });
@@ -171,7 +191,7 @@ var ozController = {
 
         // if oz is adopted already, give class
         if(this.adoptions.hasOwnProperty(feature.properties.WorldID)){
-          style['className'] = style['className'] + ' adopted-' + this.adoptions[feature.properties.WorldID]
+          style['className'] = style['className'] + ' adopted adopted-' + this.adoptions[feature.properties.WorldID]
         }
 
         return style ;
