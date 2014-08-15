@@ -135,6 +135,8 @@ var ozController = {
 
           }
 
+          this.addAdoptionToStream(adoption);
+
         };
 
       }, this));
@@ -145,6 +147,17 @@ var ozController = {
 
   updateCountdown: function(){
     $('.countdown').html(this.totalAmountOfOmegaZones - Object.keys(this.adoptions).length);
+  },
+
+  addAdoptionToStream: function(adoption){
+
+    var adoptionHTML = '<li><span class="adoption-user">' + adoption.user_display_name + '</span> adopted <span class="adoption-oz">' + adoption.oz_zone_name + ', ' + adoption.oz_country_name + '</span></li>';
+    $(adoptionHTML).fadeIn(200).prependTo('.stream');
+
+    //remove elements from stream for performance
+    //only shows last 30
+    $('.stream li:gt(30)').remove();
+
   },
 
   fetchAdoptions: function(){
