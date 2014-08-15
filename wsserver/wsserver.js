@@ -67,41 +67,41 @@ watch('../isUpdated.txt', function(){
     console.log('new data', rows.length);
 
     //for testing purposes
-    rows = [
-      {
-        id: 45,
-        is_adopted: 1,
-        oz_country_name: "iran",
-        oz_zone_name: "yolo",
-        targetyear: 2015,
-        update: "2014-08-15T11:02:56.000Z",
-        user_display_name: "joshua",
-        user_id: 1,
-        worldid: "PHL-CEL-ZAM",
-      },
-      {
-        id: 45,
-        is_adopted: 1,
-        oz_country_name: "philipines",
-        oz_zone_name: "yolo",
-        targetyear: 2020,
-        update: "2014-08-15T11:02:56.000Z",
-        user_display_name: "joshua",
-        user_id: 1,
-        worldid: "PHL-CEL-NUE",
-      },
-      {
-        id: 45,
-        is_adopted: 1,
-        oz_country_name: "belgium",
-        oz_zone_name: "yolo",
-        targetyear: 2015,
-        update: "2014-08-15T11:02:56.000Z",
-        user_display_name: "joshua",
-        user_id: 1,
-        worldid: "PHL-CEL-BAT",
-      }
-    ] ;
+    // rows = [
+    //   {
+    //     id: 45,
+    //     is_adopted: 1,
+    //     oz_country_name: "iran",
+    //     oz_zone_name: "yolo",
+    //     targetyear: 2015,
+    //     update: "2014-08-15T11:02:56.000Z",
+    //     user_display_name: "joshua",
+    //     user_id: 1,
+    //     worldid: "PHL-CEL-ZAM",
+    //   },
+    //   {
+    //     id: 45,
+    //     is_adopted: 1,
+    //     oz_country_name: "philipines",
+    //     oz_zone_name: "yolo",
+    //     targetyear: 2020,
+    //     update: "2014-08-15T11:02:56.000Z",
+    //     user_display_name: "joshua",
+    //     user_id: 1,
+    //     worldid: "PHL-CEL-NUE",
+    //   },
+    //   {
+    //     id: 45,
+    //     is_adopted: 1,
+    //     oz_country_name: "belgium",
+    //     oz_zone_name: "yolo",
+    //     targetyear: 2015,
+    //     update: "2014-08-15T11:02:56.000Z",
+    //     user_display_name: "joshua",
+    //     user_id: 1,
+    //     worldid: "PHL-CEL-BAT",
+    //   }
+    // ] ;
 
     for (var id in sockets) {
       console.log('sending to', id);
