@@ -24,13 +24,37 @@ var ozController = {
     this.fetchAdoptions();
     this.connectToServer();
 
+    var urlOptionsRaw = window.location.hash.replace('#', '').split('&'),
+        urlOptions = {},
+        urlOptionDefaults = {
+          // turkey focussed
+          lat: 39.9167,
+          lon: 32.8333,
+          zoom: 5
+
+          // NL focusses
+          // lat: 52.3667,
+          // lon: 4.9000,
+          // zoom: 7
+        };
+
+    for (var i = urlOptionsRaw.length - 1; i >= 0; i--) {
+      var urlOption = urlOptionsRaw[i].split('=');
+      urlOptions[urlOption[0]] = urlOption[1];
+    };
+
+    for(var key in urlOptionDefaults){
+      if(!urlOptions.hasOwnProperty(key)){
+        urlOptions[key] = urlOptionDefaults[key];
+      }
+    };
+
+    console.log('urlOptions =', urlOptions);
+
     this.map = L.map('map', {
       minZoom: 2,
-      // zoomControl: false,
       reuseTiles: true
-    // }).setView([52.3667, 4.9000], 7), // NL zoomed in
-    }).setView([39.9167, 32.8333], 5), // turkey focused
-    // }).setView([0, 0], 2), //entire world center
+    }).setView([urlOptions.lat, urlOptions.lon], urlOptions.zoom),
 
     /*
       Available basemaps;
