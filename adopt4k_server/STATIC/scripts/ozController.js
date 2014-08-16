@@ -17,7 +17,7 @@ var ozController = {
   lq_oz_start_at_level: 1,
   hq_oz_start_at_level: 100, //no hq!
 
-  totalAmountOfOmegaZones: 3955,
+  totalAmountOfOmegaZones: 4175,
 
   init: function(){
 
