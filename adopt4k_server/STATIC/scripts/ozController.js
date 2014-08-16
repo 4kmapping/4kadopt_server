@@ -1,46 +1,31 @@
 var ozController = {
 
-  $tooltip: null,
-
   map: null,
 
-  base_layer: null,
   oz_layer: null,
 
   api_url: '/api/adoptions/?format=json&page_size=5000',
   adoptions: {},
 
-  oz_url_lq: 'https://services1.arcgis.com/DnZ5orhsUGGdUZ3h/ArcGIS/rest/services/OZ2013_LowRes/FeatureServer/0',
-  oz_url_hq: 'https://services1.arcgis.com/DnZ5orhsUGGdUZ3h/ArcGIS/rest/services/OZ2014/FeatureServer/0',
-  oz_url: this.oz_url_lq,
-
-  lq_oz_start_at_level: 1,
-  hq_oz_start_at_level: 100, //no hq!
+  oz_url: 'https://services1.arcgis.com/DnZ5orhsUGGdUZ3h/ArcGIS/rest/services/OZ2013_LowRes/FeatureServer/0',
 
   totalAmountOfOmegaZones: 4175,
 
   init: function(){
 
-    this.$tooltip = $('#tooltip');
-
-    this.fetchAdoptions();
-    this.connectToServer();
-
-    //to get a more accurate number in there
-    this.updateCountdown();
-
+    // Processing options from the URL
     var urlOptionsRaw = window.location.hash.replace('#', '').split('&'),
         urlOptions = {},
         urlOptionDefaults = {
-          // turkey focussed
-          lat: 39.9167,
-          lon: 32.8333,
-          zoom: 5
+          // turkey focussed map
+          // lat: 39.9167,
+          // lon: 32.8333,
+          // zoom: 5
 
-          // NL focussed
-          // lat: 52.3667,
-          // lon: 4.9000,
-          // zoom: 7
+          // NL focussed map
+          lat: 52.3667,
+          lon: 4.9000,
+          zoom: 7
         };
 
     for (var i = urlOptionsRaw.length - 1; i >= 0; i--) {
@@ -61,34 +46,18 @@ var ozController = {
       reuseTiles: true
     }).setView([urlOptions.lat, urlOptions.lon], urlOptions.zoom),
 
-    /*
-      Available basemaps;
-      -------------------
-      - Streets
-      - Topographic
-      - NationalGeographic - ugly
-      - Oceans - busy?
-      -> Gray - too light?
-      -> DarkGray - too dark?
-      - Imagery - busy
-      - ShadedRelief - ugly
-    */
-    // load basemap
-    // this.base_layer = L.esri.basemapLayer('Topographic').addTo(this.map) ;
-
-    // L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-base/{z}/{x}/{y}.png', {
-    //   attribution: 'Tiles &copy; Esri &mdash; Source: USGS, Esri, TANA, DeLorme, and NPS',
-    //   maxZoom: 13
-    // }).addTo(this.map);
-
     L.tileLayer('http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.jpg90?access_token=pk.eyJ1Ijoiam9zaHVhZGVsYW5nZSIsImEiOiJ3RU1SemNzIn0.CyG3f36Z16ov1JEDHw2gDQ', {
       mapid: 'joshuadelange.j5igjfc7',
     }).addTo(this.map);
 
-    this.map.on('zoomend', $.proxy(this.zoomend, this)) ;
+    // fetching current adoptions from the django server
+    this.fetchAdoptions($.proxy(function(){
+  
+      this.addOzLayer() ;
 
-    // this.addOzLayer() ;
-    this.setAppropiateOzQuality() ;
+      this.connectToServer();
+
+    }, this));
 
     return this ;
 
@@ -145,10 +114,6 @@ var ozController = {
 
   },
 
-  updateCountdown: function(){
-    $('.countdown').html(this.totalAmountOfOmegaZones - Object.keys(this.adoptions).length);
-  },
-
   addAdoptionToStream: function(adoption){
 
     var adoptionHTML = '<li><span class="adoption-user">' + adoption.user_display_name + '</span> adopted <span class="adoption-oz">' + adoption.oz_zone_name + ', ' + adoption.oz_country_name + '</span></li>';
@@ -160,7 +125,7 @@ var ozController = {
 
   },
 
-  fetchAdoptions: function(){
+  fetchAdoptions: function(cb){
 
     // fetching from the api
     // proxy to retain 'this' context
@@ -183,6 +148,8 @@ var ozController = {
 
       this.updateCountdown();
 
+      cb();
+
     }, this));
 
   },
@@ -192,48 +159,11 @@ var ozController = {
     this.oz_layer = L.esri.featureLayer(this.oz_url, {
 
       // only load specific fields to reduce redundant data being sent back and forth
-      // 'WorldID', 'OBJECTID' are for HQ OZ2014 layer
-      // ''OBJECTID_1', 'World', 'FID' are for LQ OZ2008 layer
-      fields: ['WorldID', 'OBJECTID', 'OBJECTID_1', 'World', 'FID'],
+      fields: ['OBJECTID', 'WorldID'],
 
       // esri's library smartly 'uglifies' polygons for us for performance
       // reduce for prettier maps, increase for faster ugly
       simplifyFactor: 1,
-
-      // adds hover thing
-      // onEachFeature: $.proxy(function(feature, layer){
-
-      //   if(this.adoptions.hasOwnProperty(feature.properties.WorldID)){
-
-      //     layer.on({
-
-      //       'mousemove': $.proxy(function(e) {
-
-      //         this.$tooltip.css({
-      //           left: e.originalEvent.pageX - 25,
-      //           top: e.originalEvent.pageY- 35
-      //         });
-
-      //       }, this),
-
-      //       'mouseover': $.proxy(function(e) {
-
-      //         this.$tooltip.html(this.adoptions[feature.properties.WorldID]);
-      //         this.$tooltip.show();
-
-      //       }, this),
-
-      //       'mouseout': $.proxy(function(e) {
-
-      //         this.$tooltip.hide();
-
-      //       }, this)
-
-      //     });
-
-      //   }
-
-      // }, this),
 
       // initially style adopted oz's + give world id class name for later lookup
       style: $.proxy(function(feature){
@@ -259,52 +189,8 @@ var ozController = {
 
   },
 
-  removeOzLayer: function(){
-    if(this.oz_layer !== null){
-      this.map.removeLayer(this.oz_layer) ;
-    }
-  },
-
-  reloadOzLayer: function(){
-    this.removeOzLayer() ;
-    this.addOzLayer() ;
-  },
-
-  zoomend: function(ev){
-    this.setAppropiateOzQuality() ;
-  },
-
-  setAppropiateOzQuality: function(){
-
-    var z = this.map.getZoom() ;
-
-    if(z >= this.lq_oz_start_at_level
-    && z < this.hq_oz_start_at_level) {
-
-      //only if something changes, or else pointless/ugly reload
-      if(this.oz_url !== this.oz_url_lq) {
-        this.oz_url = this.oz_url_lq ;
-        this.reloadOzLayer() ;
-      }
-
-    }
-
-    if(z >= this.hq_oz_start_at_level) {
-
-      //only if this is new
-      if(this.oz_url !== this.oz_url_hq) {
-        this.oz_url = this.oz_url_hq ;
-        this.reloadOzLayer() ;            
-      }
-
-    }
-
-    //#yolo!
-    if(z < this.lq_oz_start_at_level) {
-      this.oz_url = null ;
-      this.removeOzLayer() ;
-    }
-
+  updateCountdown: function(){
+    $('.countdown').html(this.totalAmountOfOmegaZones - Object.keys(this.adoptions).length);
   }
 
 } ;
