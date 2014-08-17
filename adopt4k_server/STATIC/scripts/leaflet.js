@@ -5697,6 +5697,7 @@ L.Polygon = L.Polyline.extend({
 		// filter out last point if its equal to the first one
 		latlngs = this._latlngs;
 
+
 		if (latlngs.length >= 2 && latlngs[0].equals(latlngs[latlngs.length - 1])) {
 			latlngs.pop();
 		}

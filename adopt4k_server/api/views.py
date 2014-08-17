@@ -13,7 +13,8 @@ from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from django.http import HttpResponse, HttpResponseNotAllowed
 from django.http import HttpResponseBadRequest
-
+# from rest_framework import filters
+import django_filters
 
 class FullViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, 
         mixins.RetrieveModelMixin, mixins.UpdateModelMixin, 
@@ -56,16 +57,21 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated, IsAdminUser]
     
     
-    
+class OZFeatureFilter(django_filters.FilterSet):
+    class Meta:
+        model = OZFeature
+        fields = ['cntyid']
+
 class OZFeatureViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows OZFeatures to be viewed or edited.
     """
     queryset = OZFeature.objects.all()
     serializer_class = OZFeatureSerializer
+
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = []    
-    
+  
     
     
 class AdoptionViewSet(FullViewSet):
