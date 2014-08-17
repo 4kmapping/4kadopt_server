@@ -11,40 +11,45 @@ var ozController = {
 
   totalAmountOfOmegaZones: 4175,
 
+  urlOptions: {},
+
   init: function(){
 
     // Processing options from the URL
     var urlOptionsRaw = window.location.hash.replace('#', '').split('&'),
-        urlOptions = {},
         urlOptionDefaults = {
+          // esri's library smartly 'uglifies' polygons for us for performance
+          // reduce for prettier maps, increase for faster ugly
+          uglify: 1,
+
           // turkey focussed map
-          // lat: 39.9167,
-          // lon: 32.8333,
-          // zoom: 5
+          lat: 39.9167,
+          lon: 32.8333,
+          zoom: 5
 
           // NL focussed map
-          lat: 52.3667,
-          lon: 4.9000,
-          zoom: 7
+          // lat: 52.3667,
+          // lon: 4.9000,
+          // zoom: 7
         };
 
     for (var i = urlOptionsRaw.length - 1; i >= 0; i--) {
       var urlOption = urlOptionsRaw[i].split('=');
-      urlOptions[urlOption[0]] = urlOption[1];
+      this.urlOptions[urlOption[0]] = urlOption[1];
     };
 
     for(var key in urlOptionDefaults){
-      if(!urlOptions.hasOwnProperty(key)){
-        urlOptions[key] = urlOptionDefaults[key];
+      if(!this.urlOptions.hasOwnProperty(key)){
+        this.urlOptions[key] = urlOptionDefaults[key];
       }
     };
 
-    console.log('urlOptions =', urlOptions);
+    console.log('this.urlOptions =', this.urlOptions);
 
     this.map = L.map('map', {
       minZoom: 2,
       reuseTiles: true
-    }).setView([urlOptions.lat, urlOptions.lon], urlOptions.zoom),
+    }).setView([this.urlOptions.lat, this.urlOptions.lon], this.urlOptions.zoom),
 
     L.tileLayer('http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.jpg90?access_token=pk.eyJ1Ijoiam9zaHVhZGVsYW5nZSIsImEiOiJ3RU1SemNzIn0.CyG3f36Z16ov1JEDHw2gDQ', {
       mapid: 'joshuadelange.j5igjfc7',
@@ -161,9 +166,7 @@ var ozController = {
       // only load specific fields to reduce redundant data being sent back and forth
       fields: ['OBJECTID', 'WorldID'],
 
-      // esri's library smartly 'uglifies' polygons for us for performance
-      // reduce for prettier maps, increase for faster ugly
-      simplifyFactor: 1,
+      simplifyFactor: this.urlOptions.uglify,
 
       // initially style adopted oz's + give world id class name for later lookup
       style: $.proxy(function(feature){

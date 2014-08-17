@@ -147,30 +147,8 @@ h2 {
   background-color: #fee0d2;
 }
 
-
 .leaflet-control-attribution {
   display: none;
-}
-
-#tooltip {
-  display: none;
-
-  position: absolute;
-
-  z-index: 100;
-    top: 0;
-    left: 0;
-
-  width: 45px;
-  height: 25px;
-
-  padding: 2.5px;
-
-  background-color: #f2f2f2;
-  text-align: center;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px #545454;
-
 }
 
 .adopted-2013 {
@@ -212,85 +190,6 @@ path {
           transition: fill 0.5s ease-out;
 }
 
-
-/*
-path {
-  stroke: #2B2B2B;
-  stroke-width: 1px;
-  fill: #f7fbff;
-  fill: rgba(1, 1, 1, 0);
-  fill-opacity: 0.9;
-}
-
-.adopted-2013 {
-  fill: #084594;
-}
-
-.adopted-2015 {
-  fill: #2171b5;
-}
-
-.adopted-2016 {
-  fill: #4292c6;
-}
-
-.adopted-2017 {
-  fill: #6baed6;
-}
-
-.adopted-2018 {
-  fill: #9ecae1;
-}
-
-.adopted-2019 {
-  fill: #c6dbef;
-}
-
-.adopted-2020 {
-  fill: #deebf7;
-}
-
-*/
-
-
-#options {
-  position: absolute;
-    left: 0;
-    bottom: 0;
-
-  width: 165px;
-  /*height: 100px;*/
-
-  padding: 20px;
-
-  color: #595959;
-
-  background-color: rgba(1, 1, 1, 0.8);
-}
-
-#options h2 {
-  font-weight: 100;
-  margin: 0;
-  font-size: 20px;
-  line-height: 30px;
-  color: #B5B5B5;
-}
-
-#options p {
-  margin: 10px 0;
-  font-style: italic;
-  color: #3b3b3b;
-}
-
-#options label {
-  display: inline-block;
-  width: 80%;
-}
-
-#options input {
-  display: inline-block;
-  width: 15%;
-  background-color: transparent;
-  border: 1px solid #595959;
-  color: #595959;
+.adopted {
+  stroke: #FFFAFA;
 }
