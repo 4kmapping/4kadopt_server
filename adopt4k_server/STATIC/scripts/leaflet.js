@@ -6228,7 +6228,6 @@ L.extend(L.GeoJSON, {
 	},
 
 	coordsToLatLng: function (coords) { // (Array[, Boolean]) -> LatLng
-		console.log(coords);
 		return new L.LatLng(coords[1], coords[0], coords[2]);
 	},
 
@@ -6243,7 +6242,6 @@ L.extend(L.GeoJSON, {
 
 			latlngs.push(latlng);
 		}
-		// console.log(latlngs);
 		return latlngs;
 	},
 
