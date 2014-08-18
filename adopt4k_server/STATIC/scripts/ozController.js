@@ -6,7 +6,7 @@ var ozController = {
   api_url: '/api/adoptions/?format=json&page_size=5000',
   adoptions: {},
 
-  oz_url: '/api/ozfeatures/?format=json&page_size=200',
+  oz_url: 'http://localhost:8000/api/simpleozs/?page_size=200',
   oz_lastpage: 21,
 
   totalAmountOfOmegaZones: 4175,
@@ -172,14 +172,15 @@ var ozController = {
 
     $.getJSON(url, $.proxy(function(response){
 
-      // console.log('response', response);
+      console.log('response', response);
 
-      for (var i = response.results.length - 1; i >= 0; i--) {
+      for (var i = response.data.length - 1; i >= 0; i--) {
 
-        var oz = response.results[i],  
+
+        var oz = response.data[i],  
             // give it a class name we can look up later
             className = 'oz-' + oz.worldid,
-            polygons = L.GeoJSON.coordsToLatLngs($.parseJSON(oz.polygons), 1);
+            polygons = $.parseJSON(oz.polygons);
             // polygons = $.parseJSON(oz.polygons);
 
         // console.log(polygons);
