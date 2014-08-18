@@ -17,7 +17,6 @@ import json
 from django.views.decorators.cache import cache_page
 
 
-
 class FullViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, 
         mixins.RetrieveModelMixin, mixins.UpdateModelMixin, 
         mixins.DestroyModelMixin, viewsets.GenericViewSet):
@@ -59,16 +58,16 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated, IsAdminUser]
     
     
-    
 class OZFeatureViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows OZFeatures to be viewed or edited.
     """
     queryset = OZFeature.objects.all()
     serializer_class = OZFeatureSerializer
+
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = []    
-    
+  
     
     
 class AdoptionViewSet(FullViewSet):

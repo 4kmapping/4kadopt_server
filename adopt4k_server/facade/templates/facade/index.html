@@ -17,6 +17,8 @@
 </head>
 <body>
 
+    <div class="progress"></div>
+
     <div id="map"></div>
     <div id="sidebar">
         <h1 class="countdown">4000</h1>
@@ -62,9 +64,9 @@
     <!-- Because without jQuery, where would the world really be? -->
     <script src="{% static "scripts/jquery.js" %}"></script>
     <!-- Loads leaflet, mapping library -->
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="{% static "scripts/leaflet.js" %}"></script>
     <!-- Loads esri leaflet for leaflet + arcgis integration -->
-    <script src="{% static "scripts/esri-leaflet.js" %}"></script>
+    <!-- <script src="{% static "scripts/esri-leaflet.js" %}"></script> -->
     <!-- websockets -->
     <script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
 

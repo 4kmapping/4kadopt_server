@@ -1,13 +1,13 @@
 var ozController = {
 
   map: null,
-
   oz_layer: null,
 
   api_url: '/api/adoptions/?format=json&page_size=5000',
   adoptions: {},
 
-  oz_url: 'https://services1.arcgis.com/DnZ5orhsUGGdUZ3h/ArcGIS/rest/services/OZ2013_LowRes/FeatureServer/0',
+  oz_url: '/api/ozfeatures/?format=json&page_size=200',
+  oz_lastpage: 21,
 
   totalAmountOfOmegaZones: 4175,
 
@@ -23,14 +23,14 @@ var ozController = {
           uglify: 1,
 
           // turkey focussed map
-          lat: 39.9167,
-          lon: 32.8333,
-          zoom: 5
+          // lat: 39.9167,
+          // lon: 32.8333,
+          // zoom: 5
 
           // NL focussed map
-          // lat: 52.3667,
-          // lon: 4.9000,
-          // zoom: 7
+          lat: 52.3667,
+          lon: 4.9000,
+          zoom: 5
         };
 
     for (var i = urlOptionsRaw.length - 1; i >= 0; i--) {
@@ -58,9 +58,11 @@ var ozController = {
     // fetching current adoptions from the django server
     this.fetchAdoptions($.proxy(function(){
   
-      this.addOzLayer() ;
+      this.addOzs($.proxy(function(){
 
-      this.connectToServer();
+        this.connectToServer();
+        
+      }, this)) ;
 
     }, this));
 
@@ -159,36 +161,76 @@ var ozController = {
 
   },
 
-  addOzLayer: function(){
 
-    this.oz_layer = L.esri.featureLayer(this.oz_url, {
+  // DO BATCHES! :D
 
-      // only load specific fields to reduce redundant data being sent back and forth
-      fields: ['OBJECTID', 'WorldID'],
+  addOzs: function(cb){
+    this.addNextOzs(this.oz_url, cb);
+  },
 
-      simplifyFactor: this.urlOptions.uglify,
+  addNextOzs: function(url, cb){
 
-      // initially style adopted oz's + give world id class name for later lookup
-      style: $.proxy(function(feature){
+    $.getJSON(url, $.proxy(function(response){
 
-        // give it a class name we can look up later
-        var style = {
-          // eg; oz-NLD-NOH
-          className: 'oz-' + feature.properties.WorldID
-        } ;
+      // console.log('response', response);
+
+      for (var i = response.results.length - 1; i >= 0; i--) {
+
+        var oz = response.results[i],  
+            // give it a class name we can look up later
+            className = 'oz-' + oz.worldid,
+            polygons = L.GeoJSON.coordsToLatLngs($.parseJSON(oz.polygons), 1);
+            // polygons = $.parseJSON(oz.polygons);
+
+        // console.log(polygons);
 
         // if oz is adopted already, give class
-        if(this.adoptions.hasOwnProperty(feature.properties.WorldID)){
-          style['className'] = style['className'] + ' adopted adopted-' + this.adoptions[feature.properties.WorldID]
+        if(this.adoptions.hasOwnProperty(oz.worldid)){
+          className = className + ' adopted adopted-' + this.adoptions[oz.worldid]
         }
 
-        return style ;
+        // console.log(this.map.getBounds().contains(polygons));
 
-      }, this)
+        if(this.map.getBounds().contains(polygons)){
 
-    });
+          L.multiPolygon(polygons, {
 
-    this.oz_layer.addTo(this.map);
+            // less polygon points
+            smoothFactor: this.urlOptions.uglify,
+
+            // initially style adopted oz's + give world id class name for later lookup
+            className: className,
+
+            // removes event binders for performance
+            clickable: false
+
+          }).addTo(this.map);
+
+        }
+
+      };
+
+      var currentProgress = url.match(/\?page=(\d+)/);
+
+      if(currentProgress !== null){
+        currentProgress = currentProgress[1];
+        $('.progress').css({
+          width: ((currentProgress / this.oz_lastpage) * 100) + '%'
+        });
+      }
+
+      if(response.next !== null){
+        this.addNextOzs(response.next, cb);
+      }
+      else{
+        $('.progress').fadeOut();
+        console.log('added?');
+        cb();
+      }
+
+
+    }, this));
+
 
   },
 
