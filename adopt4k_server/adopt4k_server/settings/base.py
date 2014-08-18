@@ -117,3 +117,11 @@ ANONYMOUS_USER_ID = -1
 
 UPDATE_FILE_LOC = os.path.join(os.path.dirname(BASE_DIR),"isUpdate.txt")
 
+
+CACHE = {
+    'default': {
+        'BACKEND':'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+        

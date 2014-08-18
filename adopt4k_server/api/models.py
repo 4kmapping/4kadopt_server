@@ -15,6 +15,20 @@ class OZFeature(models.Model):
     labelname = models.CharField(max_length=100)
     polygons = models.TextField()
     
+    
+class SimpleOZFeature(models.Model):
+    worldid = models.CharField(max_length=30, unique=True)
+    is_multi = models.BooleanField()
+    polygons = models.TextField()
+    
+    def as_dict(self):
+            return {
+                "id": self.id,
+                "worldid": self.worldid,
+                "is_multi": self.is_multi,
+                "polygons": self.polygons
+            }
+            
 
 class Adoption(models.Model):
     worldid = models.CharField(max_length=30)
@@ -40,3 +54,6 @@ class Adoption(models.Model):
 
     class Meta:
         unique_together = ('worldid','user')
+        
+
+    
