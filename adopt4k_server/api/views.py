@@ -58,11 +58,6 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated, IsAdminUser]
     
     
-class OZFeatureFilter(django_filters.FilterSet):
-    class Meta:
-        model = OZFeature
-        fields = ['cntyid']
-
 class OZFeatureViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows OZFeatures to be viewed or edited.
