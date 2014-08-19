@@ -6242,6 +6242,7 @@ L.extend(L.GeoJSON, {
 
 			latlngs.push(latlng);
 		}
+
 		return latlngs;
 	},
 

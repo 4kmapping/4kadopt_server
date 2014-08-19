@@ -30,18 +30,6 @@ html, body, #map {
     bottom: 0;
 }
 
-.progress {
-  position: absolute;
-    top: 0;
-    left: 0;
-  
-  width: 0%;
-  height: 2px;
-
-  background-color: #cb181d;
-  z-index: 100;
-}
-
 h1, h2 {
   font-weight: 100;
   text-align: center;
@@ -49,7 +37,7 @@ h1, h2 {
 }
 
 h1 {
-  font-size: 85px;
+  font-size: 110px;
 
   margin-top: 25px;
   margin-bottom: 45px;
@@ -203,5 +191,5 @@ path {
 }
 
 .adopted {
-  /*stroke: #FFFAFA;*/
+  stroke: #FFFAFA;
 }

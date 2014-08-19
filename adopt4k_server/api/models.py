@@ -15,20 +15,6 @@ class OZFeature(models.Model):
     labelname = models.CharField(max_length=100)
     polygons = models.TextField()
     
-    
-class SimpleOZFeature(models.Model):
-    worldid = models.CharField(max_length=30, unique=True)
-    is_multi = models.BooleanField()
-    polygons = models.TextField()
-    
-    def as_dict(self):
-            return {
-                "id": self.id,
-                "worldid": self.worldid,
-                "is_multi": self.is_multi,
-                "polygons": self.polygons
-            }
-            
 
 class Adoption(models.Model):
     worldid = models.CharField(max_length=30)
@@ -49,11 +35,8 @@ class Adoption(models.Model):
         isUpdatedFilePath = os.path.dirname(os.path.realpath(__file__)) + "/../../isUpdated.txt"
         #isUpdatedFile = UPDATE_FILE_LOC
         isUpdatedFile = open(isUpdatedFilePath, 'w')
-        isUpdatedFile.write("1")
+        isUpdatedFile.write("11")
         isUpdatedFile.close()
 
     class Meta:
         unique_together = ('worldid','user')
-        
-
-    

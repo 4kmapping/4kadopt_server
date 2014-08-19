@@ -7,14 +7,12 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from api.serializers import UserSerializer, GroupSerializer
 from api.serializers import OZFeatureSerializer, AdoptionSerializer
 from api.serializers import AdoptionSimpleSerializer, AdoptionWithUserSerializer
-from api.models import OZFeature, Adoption, SimpleOZFeature
+from api.models import OZFeature, Adoption
 from permissions import IsOwner, AllReadCreateOnlyOwnerUpdateDelete
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from django.http import HttpResponse, HttpResponseNotAllowed
 from django.http import HttpResponseBadRequest
-import json
-from django.views.decorators.cache import cache_page
 
 
 class FullViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, 
@@ -58,16 +56,16 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated, IsAdminUser]
     
     
+    
 class OZFeatureViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows OZFeatures to be viewed or edited.
     """
     queryset = OZFeature.objects.all()
     serializer_class = OZFeatureSerializer
-
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = []    
-  
+    
     
     
 class AdoptionViewSet(FullViewSet):
@@ -141,14 +139,3 @@ def ozstatus(request):
         return HttpResponseBadRequest(mssg)
 
     
-@cache_page(60 * 60 * 24 * 30)    
-def simpleozs(request):
-    if request.method == 'GET':
-        qset = SimpleOZFeature.objects.all()
-        dictionaries = [ obj.as_dict() for obj in qset ]
-        return HttpResponse(json.dumps({"data": dictionaries}), 
-            content_type='application/json')
-        
-    else:
-        mssg = 'The HTTP method is not supported'
-        return HttpResponseBadRequest(mssg)   
