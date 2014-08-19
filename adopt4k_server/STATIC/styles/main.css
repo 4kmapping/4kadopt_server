@@ -13,14 +13,21 @@ html, body, #map {
 
 }
 
+.map-wrapper {
+  position: absolute;
+    top: 0;
+    left: 0;
+    right: 285px;
+    bottom: 0;
+}
+
 #map {
-  width: 80%;
-  float: left;
+  width: 100%;
 }
 
 #sidebar {
-  width: 17%;
-  padding: 1.5%;
+  width: 245px;
+  padding: 20px;
   float: right;
   color: #BDBDBD;
 
