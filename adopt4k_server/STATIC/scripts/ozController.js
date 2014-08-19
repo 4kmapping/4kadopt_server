@@ -6,7 +6,7 @@ var ozController = {
   api_url: '/api/adoptions/?format=json&page_size=5000',
   adoptions: {},
 
-  oz_url: 'http://4kadopt.org/api/simpleozs/',
+  oz_url: '/api/simpleozs/',
   oz_lastpage: 21,
 
   totalAmountOfOmegaZones: 4175,
