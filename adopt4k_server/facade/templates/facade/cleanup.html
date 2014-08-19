@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- ADOPT OMEGA ZONES NOAW! -->
+    <title>4K Adopt</title>
+
+
+</head>
+<body>
+{% if user.is_superuser %}
+    
+To Clear up all the adoptions, Type 'CLEARUP-ADOPTIONS' and click 'GO' button.
+
+    <form class="modal" id="api_info" method="POST">
+        {% csrf_token %}
+        <h3>Type Command</h3>
+
+            <label for="api_name">Command:</label>
+            <input type="text" name="command" id="command">
+            <input type="submit" value="GO">
+    </form>    
+
+{% else %}
+    <p>In order to use this page, you should login as an admin.</p>
+{% endif %}    
+    
+</body>
+</html>

@@ -13,6 +13,7 @@ from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from django.http import HttpResponse, HttpResponseNotAllowed
 from django.http import HttpResponseBadRequest
+from models import Adoption
 
 
 class FullViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, 
@@ -138,4 +139,11 @@ def ozstatus(request):
         mssg = 'The HTTP method is not supported'
         return HttpResponseBadRequest(mssg)
 
+  
     
+
+                
+            
+            
+            
+            
