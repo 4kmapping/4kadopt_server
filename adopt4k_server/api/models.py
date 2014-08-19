@@ -49,7 +49,7 @@ class Adoption(models.Model):
         isUpdatedFilePath = os.path.dirname(os.path.realpath(__file__)) + "/../../isUpdated.txt"
         #isUpdatedFile = UPDATE_FILE_LOC
         isUpdatedFile = open(isUpdatedFilePath, 'w')
-        isUpdatedFile.write("11")
+        isUpdatedFile.write("1")
         isUpdatedFile.close()
 
     class Meta:
