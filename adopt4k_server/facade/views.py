@@ -37,5 +37,10 @@ def cleanup_adoptions(request):
     else:
         mssg = "The HTTP method is not supported or you don't have a privilege."
         return HttpResponseBadRequest(mssg)
-        
+
+
+def download(request):
+    return render(request, 'facade/download.html', {})
+    
+            
                 
